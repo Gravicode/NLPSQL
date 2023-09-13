@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33027.239
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NlpSql.Library", "NlpSql.Library\NlpSql.Library.csproj", "{4EAD6609-A22D-4BCD-93D4-08835D948EB4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{CF527F1F-5E41-40A1-80FA-D54F3666FABA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NlpSql.Web", "NlpSql.Web\NlpSql.Web.csproj", "{787B4C9E-FAED-455A-B1DA-AD57DE865DC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{11C42783-771E-463E-A686-1BAB11433294}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchemaGenerator", "SchemaGenerator\SchemaGenerator.csproj", "{C1C62B87-5181-474F-8D5C-12613F7620AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NlpSql.DemoWeb", "NlpSql.DemoWeb\NlpSql.DemoWeb.csproj", "{C8B64B0D-527B-4915-98A6-9FE3BD2CA38D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EAD6609-A22D-4BCD-93D4-08835D948EB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EAD6609-A22D-4BCD-93D4-08835D948EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EAD6609-A22D-4BCD-93D4-08835D948EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EAD6609-A22D-4BCD-93D4-08835D948EB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{787B4C9E-FAED-455A-B1DA-AD57DE865DC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{787B4C9E-FAED-455A-B1DA-AD57DE865DC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{787B4C9E-FAED-455A-B1DA-AD57DE865DC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{787B4C9E-FAED-455A-B1DA-AD57DE865DC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1C62B87-5181-474F-8D5C-12613F7620AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1C62B87-5181-474F-8D5C-12613F7620AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1C62B87-5181-474F-8D5C-12613F7620AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1C62B87-5181-474F-8D5C-12613F7620AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8B64B0D-527B-4915-98A6-9FE3BD2CA38D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8B64B0D-527B-4915-98A6-9FE3BD2CA38D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8B64B0D-527B-4915-98A6-9FE3BD2CA38D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8B64B0D-527B-4915-98A6-9FE3BD2CA38D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4EAD6609-A22D-4BCD-93D4-08835D948EB4} = {CF527F1F-5E41-40A1-80FA-D54F3666FABA}
+		{787B4C9E-FAED-455A-B1DA-AD57DE865DC6} = {CF527F1F-5E41-40A1-80FA-D54F3666FABA}
+		{C1C62B87-5181-474F-8D5C-12613F7620AF} = {11C42783-771E-463E-A686-1BAB11433294}
+		{C8B64B0D-527B-4915-98A6-9FE3BD2CA38D} = {11C42783-771E-463E-A686-1BAB11433294}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E9A79E5-6779-4295-9ACF-BB7BA4873907}
+	EndGlobalSection
+EndGlobal

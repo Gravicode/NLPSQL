@@ -1,0 +1,192 @@
+description: Product, sales, and customer data for the AdentureWorks company.
+tables:
+  - dbo.BuildVersion: Current version number of the AdventureWorksLT 2008 sample database. 
+    columns:
+      Database Version: Version number of the database in 9.yy.mm.dd.00 format.
+      ModifiedDate: Date and time the record was last updated.
+      SystemInformationID: Primary key for BuildVersion records.
+      VersionDate: Date and time the record was last updated.
+  - dbo.ErrorLog: Audit table tracking errors in the the AdventureWorks database that are caught by the CATCH block of a TRY...CATCH construct. Data is inserted by stored procedure dbo.uspLogError when it is executed from inside the CATCH block of a TRY...CATCH construct.
+    columns:
+      ErrorLogID: Primary key for ErrorLog records.
+      ErrorLine: The line number at which the error occurred.
+      ErrorMessage: The message text of the error that occurred.
+      ErrorNumber: The error number of the error that occurred.
+      ErrorProcedure: The name of the stored procedure or trigger where the error occurred.
+      ErrorSeverity: The severity of the error that occurred.
+      ErrorState: The state number of the error that occurred.
+      ErrorTime: The date and time at which the error occurred.
+      UserName: The user who executed the batch in which the error occurred.
+  - SalesLT.Address: Street address information for customers.
+    columns:
+      AddressID: Primary key for Address records.
+      AddressLine1: First street address line.
+      AddressLine2: Second street address line.
+      AddressLine2: Nonclustered index.
+      City: Nonclustered index.
+      City: Name of the city.
+      CountryRegion: 
+      ModifiedDate: Date and time the record was last updated.
+      PostalCode: Postal code for the street address.
+      rowguid: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.
+      StateProvince: Name of state or province.
+  - SalesLT.Customer: Customer information.
+    columns:
+      CustomerID: Primary key for Customer records.
+      CompanyName: The customer's organization.
+      EmailAddress: E-mail address for the person.
+      FirstName: First name of the person.
+      LastName: Last name of the person.
+      MiddleName: Middle name or middle initial of the person.
+      ModifiedDate: Date and time the record was last updated.
+      NameStyle: 0 = The data in FirstName and LastName are stored in western style (first name, last name) order.  1 = Eastern style (last name, first name) order.
+      PasswordHash: Password for the e-mail account.
+      PasswordSalt: Random value concatenated with the password string before the password is hashed.
+      Phone: Phone number associated with the person.
+      rowguid: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.
+      SalesPerson: The customer's sales person, an employee of AdventureWorks Cycles.
+      Suffix: Surname suffix. For example, Sr. or Jr.
+      Title: A courtesy title. For example, Mr. or Ms.
+      Title: Nonclustered index.
+  - SalesLT.CustomerAddress: Cross-reference table mapping customers to their address(es).
+    columns:
+      AddressID: Primary key. Foreign key to Address.AddressID.
+      CustomerID: Primary key. Foreign key to Customer.CustomerID.
+      AddressType: The kind of Address. One of: Archive, Billing, Home, Main Office, Primary, Shipping
+      ModifiedDate: Date and time the record was last updated.
+      rowguid: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.
+  - SalesLT.Product: Products sold or used in the manfacturing of sold products.
+    columns:
+      ProductID: Primary key for Product records.
+      Color: Product color.
+      DiscontinuedDate: Date the product was discontinued.
+      ListPrice: Selling price.
+      ModifiedDate: Date and time the record was last updated.
+      Name: Name of the product.
+      ProductCategoryID: Product is a member of this product category. Foreign key to ProductCategory.ProductCategoryID. 
+      ProductModelID: Product is a member of this product model. Foreign key to ProductModel.ProductModelID.
+      ProductNumber: Unique product identification number.
+      rowguid: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.
+      SellEndDate: Date the product was no longer available for sale.
+      SellStartDate: Date the product was available for sale.
+      Size: Product size.
+      StandardCost: Standard cost of the product.
+      ThumbNailPhoto: Small image of the product.
+      ThumbnailPhotoFileName: Small image file name.
+      Weight: Product weight.
+  - SalesLT.ProductCategory: High-level product categorization.
+    columns:
+      ProductCategoryID: Primary key for ProductCategory records.
+      ModifiedDate: Date and time the record was last updated.
+      Name: Category description.
+      ParentProductCategoryID: Product category identification number of immediate ancestor category. Foreign key to ProductCategory.ProductCategoryID.
+      rowguid: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.
+  - SalesLT.ProductDescription: Product descriptions in several languages.
+    columns:
+      ProductDescriptionID: Primary key for ProductDescription records.
+      Description: Description of the product.
+      ModifiedDate: Date and time the record was last updated.
+      rowguid: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.
+  - SalesLT.ProductModel: 
+    columns:
+      ProductModelID: 
+      CatalogDescription: 
+      ModifiedDate: 
+      Name: 
+      rowguid: 
+  - SalesLT.ProductModelProductDescription: Cross-reference table mapping product descriptions and the language the description is written in.
+    columns:
+      Culture: The culture for which the description is written
+      ProductDescriptionID: Primary key. Foreign key to ProductDescription.ProductDescriptionID.
+      ProductModelID: Primary key. Foreign key to ProductModel.ProductModelID.
+      ModifiedDate: Date and time the record was last updated.
+      rowguid: 
+  - SalesLT.SalesOrderDetail: Individual products associated with a specific sales order. See SalesOrderHeader.
+    columns:
+      SalesOrderDetailID: Primary key. One incremental unique number per product sold.
+      SalesOrderID: Primary key. Foreign key to SalesOrderHeader.SalesOrderID.
+      LineTotal: Per product subtotal. Computed as UnitPrice * (1 - UnitPriceDiscount) * OrderQty.
+      ModifiedDate: Date and time the record was last updated.
+      OrderQty: Nonclustered index.
+      OrderQty: Quantity ordered per product.
+      ProductID: Product sold to customer. Foreign key to Product.ProductID.
+      rowguid: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.
+      UnitPrice: Selling price of a single product.
+      UnitPriceDiscount: Discount amount.
+  - SalesLT.SalesOrderHeader: General sales order information.
+    columns:
+      SalesOrderID: Primary key.
+      AccountNumber: Financial accounting number reference.
+      BillToAddressID: The ID of the location to send invoices.  Foreign key to the Address table.
+      Comment: Sales representative comments.
+      CreditCardApprovalCode: Approval code provided by the credit card company.
+      CustomerID: Customer identification number. Foreign key to Customer.CustomerID.
+      DueDate: Date the order is due to the customer.
+      Freight: Shipping cost.
+      ModifiedDate: Date and time the record was last updated.
+      OnlineOrderFlag: 0 = Order placed by sales person. 1 = Order placed online by customer.
+      OrderDate: Dates the sales order was created.
+      PurchaseOrderNumber: Customer purchase order number reference. 
+      RevisionNumber: Incremental number to track changes to the sales order over time.
+      rowguid: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.
+      SalesOrderNumber: Unique sales order identification number.
+      ShipDate: Date the order was shipped to the customer.
+      ShipDate: Nonclustered index.
+      ShipMethod: Shipping method. Foreign key to ShipMethod.ShipMethodID.
+      ShipToAddressID: The ID of the location to send goods.  Foreign key to the Address table.
+      Status: Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled
+      SubTotal: Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.
+      TaxAmt: Tax amount.
+      TotalDue: Total due from customer. Computed as Subtotal + TaxAmt + Freight.
+  - SalesLT.vGetAllCategories: 
+    columns:
+      ParentProductCategoryName: 
+      ProductCategoryID: 
+      ProductCategoryName: 
+  - SalesLT.vProductAndDescription: 
+    columns:
+      Culture: 
+      Description: 
+      Name: 
+      ProductID: Clustered index on the view vProductAndDescription.
+      ProductModel: 
+  - SalesLT.vProductModelCatalogDescription: 
+    columns:
+      BikeFrame: 
+      Color: 
+      Copyright: 
+      Crankset: 
+      MaintenanceDescription: 
+      Manufacturer: 
+      Material: 
+      ModifiedDate: 
+      Name: 
+      NoOfYears: 
+      Pedal: 
+      PictureAngle: 
+      PictureSize: 
+      ProductLine: 
+      ProductModelID: 
+      ProductPhotoID: 
+      ProductURL: 
+      RiderExperience: 
+      rowguid: 
+      Saddle: 
+      Style: 
+      Summary: 
+      WarrantyDescription: 
+      WarrantyPeriod: 
+      Wheel: 
+references:
+  SalesLT.CustomerAddress.AddressID: SalesLT.Address.AddressID
+  SalesLT.CustomerAddress.CustomerID: SalesLT.Customer.CustomerID
+  SalesLT.Product.ProductCategoryID: SalesLT.ProductCategory.ProductCategoryID
+  SalesLT.Product.ProductModelID: SalesLT.ProductModel.ProductModelID
+  SalesLT.ProductCategory.ParentProductCategoryID: SalesLT.ProductCategory.ProductCategoryID
+  SalesLT.ProductModelProductDescription.ProductDescriptionID: SalesLT.ProductDescription.ProductDescriptionID
+  SalesLT.ProductModelProductDescription.ProductModelID: SalesLT.ProductModel.ProductModelID
+  SalesLT.SalesOrderDetail.SalesOrderID: SalesLT.SalesOrderHeader.SalesOrderID
+  SalesLT.SalesOrderDetail.ProductID: SalesLT.Product.ProductID
+  SalesLT.SalesOrderHeader.BillToAddressID: SalesLT.Address.AddressID
+  SalesLT.SalesOrderHeader.CustomerID: SalesLT.Customer.CustomerID
+  SalesLT.SalesOrderHeader.ShipToAddressID: SalesLT.Address.AddressID

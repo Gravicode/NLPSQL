@@ -1,0 +1,259 @@
+﻿@page "/generate-query"
+@inject ISnackbar snackbar
+@inject IKernel kernel
+@inject SqlConnectionProvider sqlProvider
+@inject ISnackbar snackbar
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@using ImageCharts.NET;
+@using System.Data;
+@using Microsoft.SemanticKernel;
+@using SemanticKernel.Data.NlpSql;
+
+<MudGrid Class="mb-2">
+    <MudItem xs="12" sm="7">
+        <MudPaper Class="pa-4">
+            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+                <MudTextField T="string" @bind-Value="Prompt" Label="Your question here" Required="true" RequiredError="type command to generate query!" />
+
+            </MudForm>
+        </MudPaper>
+        <MudPaper Class="pa-4 mt-4">
+            <MudButton Variant="Variant.Filled" Disabled="IsLoading" Color="Color.Primary" DisableElevation="true" OnClick="GenerateQuery">Show Me Data</MudButton>
+            <MudButton Variant="Variant.Filled" Disabled="IsLoading" Color="Color.Secondary" DisableElevation="true" OnClick="@(()=>form.ResetAsync())">Reset</MudButton>
+            <MudButton Variant="Variant.Filled" Disabled="IsLoading" Color="Color.Success" DisableElevation="true" OnClick="()=>GetRandomQuery()" Class="mx-2">Sample Query</MudButton>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="5">
+        <MudPaper Class="pa-4 mud-height-full">
+            <MudText Typo="Typo.subtitle2">@($"Errors ({errors.Length})")</MudText>
+                @foreach (var error in errors)
+            {
+                <MudText Color="@Color.Error">@error</MudText>
+            }
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+@if (IsLoading)
+{
+    <MudProgressCircular Color="Color.Success" Indeterminate="true" />
+}
+@((MarkupString)Result)
+@if (!string.IsNullOrEmpty(ImageChartStr))
+{
+    <div class="mt-2">
+        <MudImage Src="@ImageChartStr"></MudImage>
+    </div>
+}
+@code {
+    string ImageChartStr;
+    bool IsLoading = false;
+    string Prompt;
+    string Result;
+    bool success;
+    string[] errors = { };
+    MudForm form;
+    SemanticKernel.Data.NlpSql.NlpSqlWeb service;
+    protected override void OnInitialized()
+    {
+        var schemas = AppConstants.SchemaNames.Split(',').Select(x=>x.Trim()).ToArray();
+        service = new SemanticKernel.Data.NlpSql.NlpSqlWeb(kernel,sqlProvider,schemas);
+    }
+    async Task GenerateQuery()
+    {
+        IsLoading = true;
+        await Task.Delay(1);
+        await InvokeAsync(StateHasChanged);
+        try
+        {
+            if (string.IsNullOrEmpty(Prompt))
+            {
+                snackbar.Add("Type your question first", Severity.Warning);
+                return;
+            }
+            var dt = await service.GenerateQuery(Prompt);
+            await GenerateChart(dt);
+            Result = await service.GetTable(dt);
+        }
+        catch (Exception ex)
+        {
+            snackbar.Add($"error: {ex}", Severity.Error);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+
+
+    }
+    string[] queries = new string[]
+    {
+        "how many records in table a are associated with each b",
+"how many registered users are there?",
+"how many interest categories are there?",
+"show how many users are associated with each category",
+"how many categories are associated with a user that is associated with more than one categories",
+"how many categories does each user have?",
+"how many categories does each user have? (show id and name)",
+"how many categories does each user have ? (show id and full name)",
+"how many categories does each user have ? (show id and full name and sort descending by count)",
+"list all categories",
+"list all categories(show all fields)",
+"list categories for May",
+"list categories for user named May",
+"list categories for user named May(include id and full user name)",
+"what year had the most sales?",
+"what year had the highest amount sales?",
+"are there any sales outside of 2008?",
+"What month had the highest product sales?",
+"Summarize sales by month before tax (show name of month)",
+"How many customers?",
+"How many customers made any purchase?",
+"How many customers didn't make any purchases?",
+"How many adventureworks customers didn't make any purchases?",
+"which customers purchaed only one item (show id and name)",
+"how many languages are the product descriptions",
+"which languages are the product descriptions",
+"show me the product descriptions translated into french \"fr\" (include id and name)"
+    };
+    void GetRandomQuery()
+    {
+        Random rnd = new Random();
+        var idx = rnd.Next(0, queries.Length);
+        Prompt = queries[idx];
+    }
+
+    async Task GenerateChart(DataTable table)
+    {
+        ImageChartStr = string.Empty;
+        if (table == null)
+        {
+            return;
+        }
+        var coltypes = DetectColumn(table);
+        List<double> dataValues = new();
+        List<string?> dataLabels = new();
+        if (table.Columns.Count == 2)
+        {
+            foreach (var coltype in coltypes.Reverse())
+            {
+                if (coltype.Value == TypeDataGeneric.DOUBLE && dataValues.Count<=0)
+                {
+                    dataValues = table.AsEnumerable().Select(x => x.Field<double>(coltype.Key)).ToList();
+                }
+                if (coltype.Value == TypeDataGeneric.DECIMAL && dataValues.Count <= 0)
+                {
+                    var dataDecimal = table.AsEnumerable().Select(x => x.Field<decimal>(coltype.Key)).ToList();
+                    dataValues = dataDecimal.Select(x => (double)x).ToList();
+                }
+                else if (coltype.Value == TypeDataGeneric.INTEGER && dataValues.Count <= 0)
+                {
+                    var dataInt = table.AsEnumerable().Select(x => x.Field<int>(coltype.Key)).ToList();
+                    dataValues = dataInt.Select(x => (double)x).ToList();
+                }
+                else
+                {
+                    if(coltype.Value == TypeDataGeneric.TEXT)
+                    {
+                        dataLabels = table.AsEnumerable().Select(x => x.Field<string>(coltype.Key)).ToList();
+                    }
+                    else if (coltype.Value == TypeDataGeneric.INTEGER)
+                    {
+                        dataLabels = table.AsEnumerable().Select(x => x.Field<int>(coltype.Key).ToString()).ToList();
+                    }
+                    else if (coltype.Value == TypeDataGeneric.DOUBLE)
+                    {
+                        dataLabels = table.AsEnumerable().Select(x => x.Field<double>(coltype.Key).ToString()).ToList();
+                    }
+                    else if (coltype.Value == TypeDataGeneric.DECIMAL)
+                    {
+                        dataLabels = table.AsEnumerable().Select(x => x.Field<decimal>(coltype.Key).ToString()).ToList();
+                    }
+                    else if (coltype.Value == TypeDataGeneric.DATE)
+                    {
+                        dataLabels = table.AsEnumerable().Select(x => x.Field<DateTime>(coltype.Key).ToString()).ToList();
+                    }
+                }
+
+            }
+
+        }
+        else
+        {
+            return;
+        }
+        if (dataValues.Count > 0)
+        {
+            //values
+            var chdStr = string.Join(",", dataValues);
+            //labels
+            var chlStr = dataLabels.Count > 0 ? string.Join("|", dataLabels) : "";
+            var myChart = new ImageChart();
+            if (table.Rows.Count <= 10)
+            {
+                myChart
+                .cht("p3") // pie chart
+                .chs("450x450") // 700px x 190px
+                .chd($"t:{chdStr}") // 2 data points: 60 and 40
+                .chl(chlStr) // 1 label per pie slice : "Hello" and "World"
+                .chf("ps0-0,lg,45,ffeb3b,0.2,f44336,1|ps0-1,lg,45,8bc34a,0.2,009688,1"); // 1 gradient per pie slice
+            }else{
+                myChart
+                .cht("bvg") // vertical bar chart
+                .chd($"a:{chdStr}") // 2 data points: 60 and 40
+                .chs("700x450") // chs=700x125
+                .chl(chlStr) // 1 label per pie slice : "Hello" and "World"
+                .chtt(Prompt); // cht=bvs
+                            //var urlToImage = myFirstChart.toURL();
+            }
+            // Creates a base64 string containing the Chart
+            ImageChartStr = await myChart.toDataURIAsync();
+        }
+    }
+    public enum TypeDataGeneric { TEXT, DATE, DOUBLE, YESNO, TIME, INTEGER, DECIMAL };
+    Dictionary<int, TypeDataGeneric> DetectColumn(DataTable dt)
+    {
+        int count = 0;
+        var ds = new Dictionary<int, TypeDataGeneric>();
+        foreach (DataColumn dc in dt.Columns)
+        {
+            var typestr = dc.DataType.ToString().Replace("System.", string.Empty);
+            switch (typestr)
+            {
+                case "Boolean":
+                    ds.Add(count, TypeDataGeneric.YESNO);
+                    break;
+                case "Char":
+                case "String":
+                    ds.Add(count, TypeDataGeneric.TEXT);
+                    break;
+                case "DateTime":
+                    ds.Add(count, TypeDataGeneric.DATE);
+                    break;
+                case "Byte":
+                case "Int16":
+                case "Int32":
+                case "Int64":
+                case "UInt16":
+                case "UInt32":
+                case "UInt64":
+                case "SByte":
+                    ds.Add(count, TypeDataGeneric.INTEGER);
+                    break;
+
+                case "Decimal":
+                    ds.Add(count, TypeDataGeneric.DECIMAL);
+                    break;
+                case "Double":
+                case "Single":
+                    ds.Add(count, TypeDataGeneric.DOUBLE);
+                    break;
+                case "TimeSpan":
+                    ds.Add(count, TypeDataGeneric.TIME);
+                    break;
+            }
+            count++;
+        }
+        return ds;
+    }
+}

@@ -1,0 +1,831 @@
+{
+  "Name": "AdventureWorksLT2012",
+  "Description": "Product, sales, and customer data for the AdentureWorks company.",
+  "Platform": "Microsoft SQL Server",
+  "Tables": [
+    {
+      "Name": "dbo.BuildVersion",
+      "Description": "Current version number of the AdventureWorksLT 2008 sample database. ",
+      "Columns": [
+        {
+          "Name": "Database Version",
+          "Description": "Version number of the database in 9.yy.mm.dd.00 format.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ModifiedDate",
+          "Description": "Date and time the record was last updated.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "SystemInformationID",
+          "Description": "Primary key for BuildVersion records.",
+          "Type": "tinyint"
+        },
+        {
+          "Name": "VersionDate",
+          "Description": "Date and time the record was last updated.",
+          "Type": "datetime"
+        }
+      ]
+    },
+    {
+      "Name": "dbo.ErrorLog",
+      "Description": "Audit table tracking errors in the the AdventureWorks database that are caught by the CATCH block of a TRY...CATCH construct. Data is inserted by stored procedure dbo.uspLogError when it is executed from inside the CATCH block of a TRY...CATCH construct.",
+      "Columns": [
+        {
+          "Name": "ErrorLogID",
+          "Description": "Primary key for ErrorLog records.",
+          "Type": "int",
+          "IsPrimary": true
+        },
+        {
+          "Name": "ErrorLine",
+          "Description": "The line number at which the error occurred.",
+          "Type": "int"
+        },
+        {
+          "Name": "ErrorMessage",
+          "Description": "The message text of the error that occurred.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ErrorNumber",
+          "Description": "The error number of the error that occurred.",
+          "Type": "int"
+        },
+        {
+          "Name": "ErrorProcedure",
+          "Description": "The name of the stored procedure or trigger where the error occurred.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ErrorSeverity",
+          "Description": "The severity of the error that occurred.",
+          "Type": "int"
+        },
+        {
+          "Name": "ErrorState",
+          "Description": "The state number of the error that occurred.",
+          "Type": "int"
+        },
+        {
+          "Name": "ErrorTime",
+          "Description": "The date and time at which the error occurred.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "UserName",
+          "Description": "The user who executed the batch in which the error occurred.",
+          "Type": "nvarchar"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.Address",
+      "Description": "Street address information for customers.",
+      "Columns": [
+        {
+          "Name": "AddressID",
+          "Description": "Primary key for Address records.",
+          "Type": "int",
+          "IsPrimary": true
+        },
+        {
+          "Name": "AddressLine1",
+          "Description": "First street address line.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "AddressLine2",
+          "Description": "Second street address line.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "AddressLine2",
+          "Description": "Nonclustered index.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "City",
+          "Description": "Nonclustered index.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "City",
+          "Description": "Name of the city.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "CountryRegion",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ModifiedDate",
+          "Description": "Date and time the record was last updated.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "PostalCode",
+          "Description": "Postal code for the street address.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "rowguid",
+          "Description": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+          "Type": "uniqueidentifier"
+        },
+        {
+          "Name": "StateProvince",
+          "Description": "Name of state or province.",
+          "Type": "nvarchar"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.Customer",
+      "Description": "Customer information.",
+      "Columns": [
+        {
+          "Name": "CustomerID",
+          "Description": "Primary key for Customer records.",
+          "Type": "int",
+          "IsPrimary": true
+        },
+        {
+          "Name": "CompanyName",
+          "Description": "The customer\u0027s organization.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "EmailAddress",
+          "Description": "E-mail address for the person.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "FirstName",
+          "Description": "First name of the person.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "LastName",
+          "Description": "Last name of the person.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "MiddleName",
+          "Description": "Middle name or middle initial of the person.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ModifiedDate",
+          "Description": "Date and time the record was last updated.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "NameStyle",
+          "Description": "0 = The data in FirstName and LastName are stored in western style (first name, last name) order.  1 = Eastern style (last name, first name) order.",
+          "Type": "bit"
+        },
+        {
+          "Name": "PasswordHash",
+          "Description": "Password for the e-mail account.",
+          "Type": "varchar"
+        },
+        {
+          "Name": "PasswordSalt",
+          "Description": "Random value concatenated with the password string before the password is hashed.",
+          "Type": "varchar"
+        },
+        {
+          "Name": "Phone",
+          "Description": "Phone number associated with the person.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "rowguid",
+          "Description": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+          "Type": "uniqueidentifier"
+        },
+        {
+          "Name": "SalesPerson",
+          "Description": "The customer\u0027s sales person, an employee of AdventureWorks Cycles.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Suffix",
+          "Description": "Surname suffix. For example, Sr. or Jr.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Title",
+          "Description": "A courtesy title. For example, Mr. or Ms.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Title",
+          "Description": "Nonclustered index.",
+          "Type": "nvarchar"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.CustomerAddress",
+      "Description": "Cross-reference table mapping customers to their address(es).",
+      "Columns": [
+        {
+          "Name": "AddressID",
+          "Description": "Primary key. Foreign key to Address.AddressID.",
+          "Type": "int",
+          "IsPrimary": true,
+          "ReferencedTable": "SalesLT.Address",
+          "ReferencedColumn": "AddressID"
+        },
+        {
+          "Name": "CustomerID",
+          "Description": "Primary key. Foreign key to Customer.CustomerID.",
+          "Type": "int",
+          "IsPrimary": true,
+          "ReferencedTable": "SalesLT.Customer",
+          "ReferencedColumn": "CustomerID"
+        },
+        {
+          "Name": "AddressType",
+          "Description": "The kind of Address. One of: Archive, Billing, Home, Main Office, Primary, Shipping",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ModifiedDate",
+          "Description": "Date and time the record was last updated.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "rowguid",
+          "Description": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+          "Type": "uniqueidentifier"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.Product",
+      "Description": "Products sold or used in the manfacturing of sold products.",
+      "Columns": [
+        {
+          "Name": "ProductID",
+          "Description": "Primary key for Product records.",
+          "Type": "int",
+          "IsPrimary": true
+        },
+        {
+          "Name": "Color",
+          "Description": "Product color.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "DiscontinuedDate",
+          "Description": "Date the product was discontinued.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "ListPrice",
+          "Description": "Selling price.",
+          "Type": "money"
+        },
+        {
+          "Name": "ModifiedDate",
+          "Description": "Date and time the record was last updated.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "Name",
+          "Description": "Name of the product.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ProductCategoryID",
+          "Description": "Product is a member of this product category. Foreign key to ProductCategory.ProductCategoryID. ",
+          "Type": "int",
+          "ReferencedTable": "SalesLT.ProductCategory",
+          "ReferencedColumn": "ProductCategoryID"
+        },
+        {
+          "Name": "ProductModelID",
+          "Description": "Product is a member of this product model. Foreign key to ProductModel.ProductModelID.",
+          "Type": "int",
+          "ReferencedTable": "SalesLT.ProductModel",
+          "ReferencedColumn": "ProductModelID"
+        },
+        {
+          "Name": "ProductNumber",
+          "Description": "Unique product identification number.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "rowguid",
+          "Description": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+          "Type": "uniqueidentifier"
+        },
+        {
+          "Name": "SellEndDate",
+          "Description": "Date the product was no longer available for sale.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "SellStartDate",
+          "Description": "Date the product was available for sale.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "Size",
+          "Description": "Product size.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "StandardCost",
+          "Description": "Standard cost of the product.",
+          "Type": "money"
+        },
+        {
+          "Name": "ThumbNailPhoto",
+          "Description": "Small image of the product.",
+          "Type": "varbinary"
+        },
+        {
+          "Name": "ThumbnailPhotoFileName",
+          "Description": "Small image file name.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Weight",
+          "Description": "Product weight.",
+          "Type": "decimal"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.ProductCategory",
+      "Description": "High-level product categorization.",
+      "Columns": [
+        {
+          "Name": "ProductCategoryID",
+          "Description": "Primary key for ProductCategory records.",
+          "Type": "int",
+          "IsPrimary": true
+        },
+        {
+          "Name": "ModifiedDate",
+          "Description": "Date and time the record was last updated.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "Name",
+          "Description": "Category description.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ParentProductCategoryID",
+          "Description": "Product category identification number of immediate ancestor category. Foreign key to ProductCategory.ProductCategoryID.",
+          "Type": "int",
+          "ReferencedTable": "SalesLT.ProductCategory",
+          "ReferencedColumn": "ProductCategoryID"
+        },
+        {
+          "Name": "rowguid",
+          "Description": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+          "Type": "uniqueidentifier"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.ProductDescription",
+      "Description": "Product descriptions in several languages.",
+      "Columns": [
+        {
+          "Name": "ProductDescriptionID",
+          "Description": "Primary key for ProductDescription records.",
+          "Type": "int",
+          "IsPrimary": true
+        },
+        {
+          "Name": "Description",
+          "Description": "Description of the product.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ModifiedDate",
+          "Description": "Date and time the record was last updated.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "rowguid",
+          "Description": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+          "Type": "uniqueidentifier"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.ProductModel",
+      "Columns": [
+        {
+          "Name": "ProductModelID",
+          "Type": "int",
+          "IsPrimary": true
+        },
+        {
+          "Name": "CatalogDescription",
+          "Type": "xml"
+        },
+        {
+          "Name": "ModifiedDate",
+          "Type": "datetime"
+        },
+        {
+          "Name": "Name",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "rowguid",
+          "Type": "uniqueidentifier"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.ProductModelProductDescription",
+      "Description": "Cross-reference table mapping product descriptions and the language the description is written in.",
+      "Columns": [
+        {
+          "Name": "Culture",
+          "Description": "The culture for which the description is written",
+          "Type": "nchar",
+          "IsPrimary": true
+        },
+        {
+          "Name": "ProductDescriptionID",
+          "Description": "Primary key. Foreign key to ProductDescription.ProductDescriptionID.",
+          "Type": "int",
+          "IsPrimary": true,
+          "ReferencedTable": "SalesLT.ProductDescription",
+          "ReferencedColumn": "ProductDescriptionID"
+        },
+        {
+          "Name": "ProductModelID",
+          "Description": "Primary key. Foreign key to ProductModel.ProductModelID.",
+          "Type": "int",
+          "IsPrimary": true,
+          "ReferencedTable": "SalesLT.ProductModel",
+          "ReferencedColumn": "ProductModelID"
+        },
+        {
+          "Name": "ModifiedDate",
+          "Description": "Date and time the record was last updated.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "rowguid",
+          "Type": "uniqueidentifier"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.SalesOrderDetail",
+      "Description": "Individual products associated with a specific sales order. See SalesOrderHeader.",
+      "Columns": [
+        {
+          "Name": "SalesOrderDetailID",
+          "Description": "Primary key. One incremental unique number per product sold.",
+          "Type": "int",
+          "IsPrimary": true
+        },
+        {
+          "Name": "SalesOrderID",
+          "Description": "Primary key. Foreign key to SalesOrderHeader.SalesOrderID.",
+          "Type": "int",
+          "IsPrimary": true,
+          "ReferencedTable": "SalesLT.SalesOrderHeader",
+          "ReferencedColumn": "SalesOrderID"
+        },
+        {
+          "Name": "LineTotal",
+          "Description": "Per product subtotal. Computed as UnitPrice * (1 - UnitPriceDiscount) * OrderQty.",
+          "Type": "numeric"
+        },
+        {
+          "Name": "ModifiedDate",
+          "Description": "Date and time the record was last updated.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "OrderQty",
+          "Description": "Nonclustered index.",
+          "Type": "smallint"
+        },
+        {
+          "Name": "OrderQty",
+          "Description": "Quantity ordered per product.",
+          "Type": "smallint"
+        },
+        {
+          "Name": "ProductID",
+          "Description": "Product sold to customer. Foreign key to Product.ProductID.",
+          "Type": "int",
+          "ReferencedTable": "SalesLT.Product",
+          "ReferencedColumn": "ProductID"
+        },
+        {
+          "Name": "rowguid",
+          "Description": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+          "Type": "uniqueidentifier"
+        },
+        {
+          "Name": "UnitPrice",
+          "Description": "Selling price of a single product.",
+          "Type": "money"
+        },
+        {
+          "Name": "UnitPriceDiscount",
+          "Description": "Discount amount.",
+          "Type": "money"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.SalesOrderHeader",
+      "Description": "General sales order information.",
+      "Columns": [
+        {
+          "Name": "SalesOrderID",
+          "Description": "Primary key.",
+          "Type": "int",
+          "IsPrimary": true
+        },
+        {
+          "Name": "AccountNumber",
+          "Description": "Financial accounting number reference.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "BillToAddressID",
+          "Description": "The ID of the location to send invoices.  Foreign key to the Address table.",
+          "Type": "int",
+          "ReferencedTable": "SalesLT.Address",
+          "ReferencedColumn": "AddressID"
+        },
+        {
+          "Name": "Comment",
+          "Description": "Sales representative comments.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "CreditCardApprovalCode",
+          "Description": "Approval code provided by the credit card company.",
+          "Type": "varchar"
+        },
+        {
+          "Name": "CustomerID",
+          "Description": "Customer identification number. Foreign key to Customer.CustomerID.",
+          "Type": "int",
+          "ReferencedTable": "SalesLT.Customer",
+          "ReferencedColumn": "CustomerID"
+        },
+        {
+          "Name": "DueDate",
+          "Description": "Date the order is due to the customer.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "Freight",
+          "Description": "Shipping cost.",
+          "Type": "money"
+        },
+        {
+          "Name": "ModifiedDate",
+          "Description": "Date and time the record was last updated.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "OnlineOrderFlag",
+          "Description": "0 = Order placed by sales person. 1 = Order placed online by customer.",
+          "Type": "bit"
+        },
+        {
+          "Name": "OrderDate",
+          "Description": "Dates the sales order was created.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "PurchaseOrderNumber",
+          "Description": "Customer purchase order number reference. ",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "RevisionNumber",
+          "Description": "Incremental number to track changes to the sales order over time.",
+          "Type": "tinyint"
+        },
+        {
+          "Name": "rowguid",
+          "Description": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.",
+          "Type": "uniqueidentifier"
+        },
+        {
+          "Name": "SalesOrderNumber",
+          "Description": "Unique sales order identification number.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ShipDate",
+          "Description": "Date the order was shipped to the customer.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "ShipDate",
+          "Description": "Nonclustered index.",
+          "Type": "datetime"
+        },
+        {
+          "Name": "ShipMethod",
+          "Description": "Shipping method. Foreign key to ShipMethod.ShipMethodID.",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ShipToAddressID",
+          "Description": "The ID of the location to send goods.  Foreign key to the Address table.",
+          "Type": "int",
+          "ReferencedTable": "SalesLT.Address",
+          "ReferencedColumn": "AddressID"
+        },
+        {
+          "Name": "Status",
+          "Description": "Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled",
+          "Type": "tinyint"
+        },
+        {
+          "Name": "SubTotal",
+          "Description": "Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.",
+          "Type": "money"
+        },
+        {
+          "Name": "TaxAmt",
+          "Description": "Tax amount.",
+          "Type": "money"
+        },
+        {
+          "Name": "TotalDue",
+          "Description": "Total due from customer. Computed as Subtotal \u002B TaxAmt \u002B Freight.",
+          "Type": "money"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.vGetAllCategories",
+      "IsView": true,
+      "Columns": [
+        {
+          "Name": "ParentProductCategoryName",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ProductCategoryID",
+          "Type": "int"
+        },
+        {
+          "Name": "ProductCategoryName",
+          "Type": "nvarchar"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.vProductAndDescription",
+      "IsView": true,
+      "Columns": [
+        {
+          "Name": "Culture",
+          "Type": "nchar"
+        },
+        {
+          "Name": "Description",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Name",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ProductID",
+          "Description": "Clustered index on the view vProductAndDescription.",
+          "Type": "int"
+        },
+        {
+          "Name": "ProductModel",
+          "Type": "nvarchar"
+        }
+      ]
+    },
+    {
+      "Name": "SalesLT.vProductModelCatalogDescription",
+      "IsView": true,
+      "Columns": [
+        {
+          "Name": "BikeFrame",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Color",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Copyright",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Crankset",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "MaintenanceDescription",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Manufacturer",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Material",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ModifiedDate",
+          "Type": "datetime"
+        },
+        {
+          "Name": "Name",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "NoOfYears",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Pedal",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "PictureAngle",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "PictureSize",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ProductLine",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ProductModelID",
+          "Type": "int"
+        },
+        {
+          "Name": "ProductPhotoID",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "ProductURL",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "RiderExperience",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "rowguid",
+          "Type": "uniqueidentifier"
+        },
+        {
+          "Name": "Saddle",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Style",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Summary",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "WarrantyDescription",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "WarrantyPeriod",
+          "Type": "nvarchar"
+        },
+        {
+          "Name": "Wheel",
+          "Type": "nvarchar"
+        }
+      ]
+    }
+  ]
+}

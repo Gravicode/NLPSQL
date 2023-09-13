@@ -1,0 +1,25 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NlpSql.DemoWeb", "NlpSql.DemoWeb.csproj", "{6E2AB743-68F8-4523-9A1A-2AAC2E5AC69B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E2AB743-68F8-4523-9A1A-2AAC2E5AC69B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E2AB743-68F8-4523-9A1A-2AAC2E5AC69B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E2AB743-68F8-4523-9A1A-2AAC2E5AC69B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E2AB743-68F8-4523-9A1A-2AAC2E5AC69B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8BD835C-DC42-4A33-BDCA-46D5F5A67D23}
+	EndGlobalSection
+EndGlobal
